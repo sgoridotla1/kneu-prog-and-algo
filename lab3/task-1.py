@@ -1,5 +1,7 @@
+"""Варіант 64. Завдання 1. Частоти слів за останньою літерою"""
 import re
 
+from utils import normalize_word, to_normilized_list
 from validations import (
     cyrillic_pattern,
     punctuation_pattern,
@@ -7,13 +9,11 @@ from validations import (
     read_string_of_pattern,
 )
 
+type Frequency = list[tuple[str, int]]
+type Matches = list[list[str]]
 
-def normalize_word(word):
-    return ''.join(char for char in word if char.isalnum()).lower()
-
-def get_match_by_pattern(string, pattern):
-    nomalized_words = [normalize_word(word) for word in string.split()]
-
+def get_match_by_pattern(string: str, pattern: str) -> list[str]:
+    nomalized_words = to_normilized_list(string, normalize_word)
     words = [];
     for word in nomalized_words:
         if re.match(pattern, word):
@@ -22,8 +22,8 @@ def get_match_by_pattern(string, pattern):
 
     return words
 
-def count_words(strings, pattern):
-    matches = []
+def count_words(strings: list[str], pattern: str) -> tuple[Matches, int, int]:
+    matches: Matches = []
 
     # [
     #  [tovar, tovar]
@@ -39,7 +39,7 @@ def count_words(strings, pattern):
 
     return matches, total_matches, unique_matches
 
-def get_frequency(matches):
+def get_frequency(matches: list[list[str]]) -> Frequency | None:
     frequency = {}
 
     if not matches:
@@ -54,13 +54,13 @@ def get_frequency(matches):
 
     return sorted(frequency.items(), key=lambda x: x[1], reverse=True)
 
-def get_top_frequency(frequency, top_n=1):
+def get_top_frequency(frequency: Frequency, top_n=1) -> Frequency | None:
     if not frequency:
         return None
 
     return frequency[:top_n]
 
-def get_first_occurrence(matches, term):
+def get_first_occurrence(matches: Matches, term: str) -> int | None:
     for i, words in enumerate(matches):
         if term in words:
             return i
@@ -70,7 +70,7 @@ def main():
     n = read_int_in_range("", 0, 30)
     letter = read_string_of_pattern("", rf"^[{cyrillic_pattern}]{{1}}$")
     term = read_string_of_pattern("", rf"^[{cyrillic_pattern}]{{1,20}}$")
-    strings = []
+    strings: list[str] = []
 
     for i in range(n):
         s = read_string_of_pattern("", rf"^[{cyrillic_pattern}{punctuation_pattern}]{{1,200}}$")
@@ -94,7 +94,7 @@ def main():
             print(f"{word}: {count}")
 
 
-    top_frequency = get_top_frequency(frequency)
+    top_frequency = get_top_frequency(frequency) if frequency else None
     if not top_frequency:
         print("Найчастіше: немає")
     else:

@@ -1,5 +1,5 @@
 cyrillic_pattern = "А-Яа-яІіЇїЄєҐґ"
-punctuation_pattern = "!?,.-:; "
+punctuation_pattern = r"!?,.\-:; "
 
 
 def read_int_in_range(prompt: str, low: int, high: int):

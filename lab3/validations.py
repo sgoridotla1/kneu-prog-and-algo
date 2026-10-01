@@ -2,7 +2,7 @@ cyrillic_pattern = "А-Яа-яІіЇїЄєҐґ"
 punctuation_pattern = "!?,.-:; "
 
 
-def read_int_in_range(prompt, low, high):
+def read_int_in_range(prompt: str, low: int, high: int):
     while True:
         try:
             value = int(input(prompt))
@@ -14,7 +14,7 @@ def read_int_in_range(prompt, low, high):
             return value
         print("Помилка: значення поза допустимим діапазоном.")
 
-def read_string_of_pattern(prompt, pattern):
+def read_string_of_pattern(prompt: str, pattern: str):
     import re
     while True:
         value = input(prompt)

@@ -1,7 +1,11 @@
 def read_int_in_range(prompt: str, low: int, high: int) -> int:
     while True:
+        line = input(prompt)
+        if not line.strip():
+            continue
+
         try:
-            value = int(input(prompt))
+            value = int(line)
         except ValueError:
             print("Помилка: потрібно ввести ціле число.")
             continue

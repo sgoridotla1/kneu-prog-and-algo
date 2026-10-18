@@ -1,6 +1,5 @@
 """Варіант 64. Завдання 2. Групи однакових ключів після сортування за остачею"""
-from utils import format_list
-from validations import read_int_in_range, read_int_list
+from utils import format_list, read_int, read_int_list
 
 type Indexed = list[tuple[int, int]]
 
@@ -50,12 +49,12 @@ def get_groups(items: Indexed) -> list[str]:
     return [f"{key}:{count}" for key, count in groups]
 
 def main():
-    n = read_int_in_range("", 0, 100)
-    numbers = read_int_list("", n, -10**9, 10**9)
+    n = read_int()
+    numbers = read_int_list(n)
 
     indexed: Indexed = [(x, i) for i, x in enumerate(numbers)]
-    by_insertion = insertion_sort(indexed)
-    by_merge = merge_sort(indexed)
+    by_insertion = insertion_sort(list(indexed))
+    by_merge = merge_sort(list(indexed))
 
     print(f"Вставки: {format_list([value for value, _ in by_insertion])}")
     print(f"Злиття: {format_list([value for value, _ in by_merge])}")
